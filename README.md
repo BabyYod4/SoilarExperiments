@@ -1,3 +1,5 @@
-# experiments
+# Gateway transmitter
 
-Generic experiment repo for pushing and updating code that does not still work 100% 
+In this test we use an iC880a gateway to transmit data to one or more rfm95w endnodes. 
+
+
