@@ -1,3 +1,4 @@
-# experiments
+# Endnode Receiver
 
-Generic experiment repo for pushing and updating code that does not still work 100% 
+In this test we try to receive an 5byte data packet consisting of a 6byte header. 
+
