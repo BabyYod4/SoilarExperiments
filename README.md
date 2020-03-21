@@ -1,3 +1,5 @@
-# experiments
+# Gateway Tranceiver
 
-Generic experiment repo for pushing and updating code that does not still work 100% 
+In this test we will switch between RX and TX mode on the gateway. The gateway will first send data 11 times to an endnode (see `endnode-tranceiver` test). After that it will go into RX mode and wait from data from a single endnode. 
+
+
