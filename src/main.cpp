@@ -40,7 +40,7 @@ LoraEndnodeSettings settings = {
 
 Rfm95wInterface interface = { 0, 9, 8, 2 };
 
-uint8_t buff[11] = {0};
+uint8_t buff[8] = {0};
 
 ISR_CODE void received(void);
 
@@ -48,19 +48,19 @@ void received(void){
 
   // received a packet
   print("Received packet '");
-  if ( receiver.read(buff, 11) == LORA_PKG_CORRUPTED ){
+  if ( receiver.read(buff, 8) == LORA_PKG_CORRUPTED ){
     Serial.println("Corrupted");
   } else{
     Serial.print("Received packet '");
+    Serial.print(buff[1]); 
+    Serial.print("-");
+    Serial.print(buff[2]); 
+    Serial.print("-"); 
+    Serial.print(buff[3]); 
+    Serial.print("-"); 
     Serial.print(buff[4]); 
     Serial.print("-");
     Serial.print(buff[5]); 
-    Serial.print("-"); 
-    Serial.print(buff[6]); 
-    Serial.print("-"); 
-    Serial.print(buff[7]); 
-    Serial.print("-");
-    Serial.print(buff[8]); 
     Serial.print("'\r\n");   
   }
   
@@ -76,7 +76,8 @@ void setup(){
     while(1);
   }
 
-  receiver.setOnReceiveCallback( received );
+  receiver.addOnReceiveCallback( received );
+  receiver.setMode( LORA_RX_LOW_POWER_MODE );
 
 }
 
