@@ -47,21 +47,23 @@ ISR_CODE void received(void);
 void received(void){
 
   // received a packet
-  print("Received packet '");
-  if ( receiver.read(buff, 8) == LORA_PKG_CORRUPTED ){
+  Serial.print("Device [1] -- Received packet ");
+  if ( receiver.read(buff, 8) == LEC_PKG_CORRUPTED ){
     Serial.println("Corrupted");
   } else{
-    Serial.print("Received packet '");
-    Serial.print(buff[1]); 
-    Serial.print("-");
-    Serial.print(buff[2]); 
-    Serial.print("-"); 
+    Serial.print("[");
     Serial.print(buff[3]); 
-    Serial.print("-"); 
+    Serial.print("] ");
+ 
     Serial.print(buff[4]); 
-    Serial.print("-");
+    Serial.print(" ");
     Serial.print(buff[5]); 
-    Serial.print("'\r\n");   
+    Serial.print(" ");
+  
+    Serial.print("-- From device [");
+    Serial.print(buff[1]);
+    Serial.print("]");
+    Serial.print("\r\n");   
   }
   
 }
@@ -71,13 +73,14 @@ void setup(){
   Serial.begin(9600);
   Serial.println("LoRa Receiver");
 
-  if ( CreateRfm95W(&receiver, &interface, &settings) == LORA_ERROR_WRONG_DEVICE ) {
+  if ( CreateRfm95W(&receiver, &interface, &settings, 0) == LEC_ERROR_WRONG_DEVICE ) {
     Serial.println("Starting LoRa failed!");
     while(1);
   }
 
   receiver.addOnReceiveCallback( received );
-  receiver.setMode( LORA_RX_LOW_POWER_MODE );
+  receiver.setMode( LEM_RX_LOW_POWER_MODE );
+  SelectLoraEndnodeDevice(0);
 
 }
 
